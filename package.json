@@ -15,6 +15,7 @@
     "moment": "^2.10.3",
     "money": "^0.2.0",
     "open-exchange-rates": "^0.3.0",
+    "restify": "^3.0.3",
     "rollbar": "^0.5.4",
     "xtconf": "^1.0.0"
   },
