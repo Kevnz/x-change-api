@@ -1,0 +1,23 @@
+{
+  "name": "x-change",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server",
+  "scripts": {
+    "test": "tap test/index.js"
+  },
+  "author": "",
+  "license": "TheUnLicense",
+  "dependencies": {
+    "async": "^1.2.1",
+    "date-arithmetic": "^3.0.0",
+    "daylight": "^0.2.3",
+    "moment": "^2.10.3",
+    "money": "^0.2.0",
+    "open-exchange-rates": "^0.3.0",
+    "xtconf": "^1.0.0"
+  },
+  "devDependencies": {
+    "tap": "^1.2.0"
+  }
+}
