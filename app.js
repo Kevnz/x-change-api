@@ -12,8 +12,9 @@ rollbar.handleUncaughtExceptions(config.get('rollbar'), options);
 
 var restify = require('restify');
 
-var server = restify.createServer();
-server.use(rollbar.errorHandler(config.get('rollbar')));
+var server = restify.createServer(); 
+ 
+//////
 var getRates = require('./rates');
 
 function rateResponse(req, res, next) {
@@ -35,10 +36,6 @@ function rateRangeResponse(req, res, next) {
     });
 };
 
-server.get('/', function (req, res, next) {
-    res.send('hello from the x-change api');
-    return next();
-});
 
 server.get('/rates/year/:year', rateResponse);
 server.get('/rates/range/:day/:month/:year/:range', rateRangeResponse);
