@@ -35,6 +35,10 @@ function rateRangeResponse(req, res, next) {
     });
 };
 
+server.get('/', function (req, res, next) {
+    res.send('hello from the x-change api');
+    return next();
+});
 
 server.get('/rates/year/:year', rateResponse);
 server.get('/rates/range/:day/:month/:year/:range', rateRangeResponse);
