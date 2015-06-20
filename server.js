@@ -23,6 +23,6 @@ function rateResponse(req, res, next) {
 
 server.get('/rates/year/:year', rateResponse);
 server.get('/rates/range/:day/:month/:year/:range', rateRangeResponse);
-server.listen(4545, function() {
+server.listen(process.env.PORT || 4545, function() {
     console.log('%s listening at %s', server.name, server.url);
 });
