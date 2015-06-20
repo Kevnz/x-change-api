@@ -1,6 +1,12 @@
+var rollbar = require("rollbar");
+var config = require('xtconf')();
+rollbar.init(config.get('rollbar'));
+
+
 var restify = require('restify');
 
 var server = restify.createServer();
+server.use(rollbar.errorHandler(config.get('rollbar')));
 var getRates = require('./rates');
 
 function rateResponse(req, res, next) {
@@ -10,7 +16,9 @@ function rateResponse(req, res, next) {
         res.send(rates);
         next();  
     });
-}function rateRangeResponse(req, res, next) {
+};
+
+function rateRangeResponse(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); 
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     var start = new Date(req.params.year, req.params.month-1, req.params.day);
@@ -18,7 +26,7 @@ function rateResponse(req, res, next) {
         res.send(rates);
         next();  
     });
-}
+};
 
 
 server.get('/rates/year/:year', rateResponse);
