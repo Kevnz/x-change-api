@@ -13,14 +13,17 @@ rollbar.handleUncaughtExceptions(config.get('rollbar'), options);
 var restify = require('restify');
 
 var server = restify.createServer(); 
- 
+server.use(restify.queryParser());
 //////
 var getRates = require('./rates');
 
 function rateResponse(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); 
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    getRates.year(req.params.year, function (err, rates) {
+    console.log(req.params);
+    var from = req.params.from || 'USD';
+    var to = req.params.to || 'NZD';
+    getRates.year(req.params.year, from, to, function (err, rates) {
         res.send(rates);
         next();  
     });
@@ -35,8 +38,18 @@ function rateRangeResponse(req, res, next) {
         next();  
     });
 };
-
-
+function latestResponse(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); 
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    console.log(req.params);
+    var from = req.params.from || 'USD';
+    var to = req.params.to || 'NZD';
+    getRates.current(from, to, function (err, rates) {
+        res.send(rates);
+        next();  
+    });
+}
+server.get('/rates/latest', latestResponse);
 server.get('/rates/year/:year', rateResponse);
 server.get('/rates/range/:day/:month/:year/:range', rateRangeResponse);
 server.listen(process.env.PORT || 4545, function() {
