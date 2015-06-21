@@ -41,14 +41,32 @@ function getRateFuncForCurrencies(from, to) {
 module.exports = {
     year: function (year,from,to, callback) {
 
-    var dateRange =  utils.yearPoints(Number(year));
-    console.log(dateRange);
-    var rateFunc = getRateFuncForCurrencies(from,to)
-	async.map(dateRange, rateFunc, callback);
-},
-    days: function (start, numberOfDays, callback) {
+        var dateRange =  utils.yearPoints(Number(year));
+        console.log(dateRange);
+        var rateFunc = getRateFuncForCurrencies(from,to);
+        var ymd = utils.yearMonthDay(Date.now());
+        if (year === ymd.year) {
+            var _oldCallback = callback;
+            callback =  function (err, rates) {
+                oxr.latest(function() {
+                    // Apply exchange rates and base rate to `fx` library object:
+                    fx.rates = oxr.rates;
+                    fx.base = oxr.base;
+                	console.log('in latest cb');
+                    var result = { rate: fx(base_amount).from(from).to(to)};
+                    rates.push(result);
+                    _oldCallback(null, rates);
+                    
+                });
+            };
+        } 
+    	async.map(dateRange, rateFunc, callback);
+    },
+    days: function (start, numberOfDays, from, to,  callback) {
         var dateRange = utils.daysInARow(start, numberOfDays);
-        async.map(dateRange, getRate, callback);
+        
+        var rateFunc = getRateFuncForCurrencies(from, to)
+        async.map(dateRange, rateFunc, callback);
         
     },
     current: function (from, to, callback) {

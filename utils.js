@@ -40,7 +40,6 @@ function yearPoints (year) {
                 dateRange.push(year+ '-' + (index < 10 ? ('0'+ index) : index) + '-15');
             }
         }
-        dateRange.push(year+ '-' + (month < 10 ? ('0'+ month) : month) + '-' + (day < 10 ? ('0'+ day) : day) );
     } else {
         for (var index = 1; index <= 12; index++) {
             dateRange.push(year+ '-' + (index < 10 ? ('0'+ index) : index) + '-01');

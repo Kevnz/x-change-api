@@ -32,6 +32,8 @@ function rateResponse(req, res, next) {
 function rateRangeResponse(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); 
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    var from = req.params.from || 'USD';
+    var to = req.params.to || 'NZD';
     var start = new Date(req.params.year, req.params.month-1, req.params.day);
     getRates.days(start, req.params.range, function (err, rates) {
         res.send(rates);
