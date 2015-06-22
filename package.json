@@ -4,7 +4,8 @@
   "description": "",
   "main": "server",
   "scripts": {
-    "test": "tap test/index.js"
+    "test": "tap test/index.js",
+    "start": "node-dev app"
   },
   "author": "",
   "license": "TheUnLicense",
@@ -20,6 +21,7 @@
     "xtconf": "^1.0.0"
   },
   "devDependencies": {
+    "node-dev": "^2.6.2",
     "tap": "^1.2.0"
   }
 }
