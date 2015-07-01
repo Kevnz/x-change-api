@@ -31,9 +31,8 @@ function getRate (date, callback) {
 }
 
 
-function getRateFuncForCurrencies(from, to) {
-    var client = redis.createClient(config.get('redis-port'), config.get('redis-endpoint'));
-    client.auth(config.get('redis-password'));
+function getRateFuncForCurrencies(from, to, client) {
+
     return function (date, callback) {
 
         client.get('rate-from-' + from + '-to-' + to + '-date-' + date, function (err, reply) {
@@ -58,11 +57,14 @@ module.exports = {
 
         var dateRange =  utils.yearPoints(Number(year));
         console.log(dateRange);
-        var rateFunc = getRateFuncForCurrencies(from, to);
+        var client = redis.createClient(config.get('redis-port'), config.get('redis-endpoint'));
+        client.auth(config.get('redis-password'));
+        var rateFunc = getRateFuncForCurrencies(from, to, client);
         var ymd = utils.yearMonthDay(Date.now());
         if (year === ymd.year) {
             var _oldCallback = callback;
             callback =  function (err, rates) {
+                client.close();
                 oxr.latest(function() {
                     // Apply exchange rates and base rate to `fx` library object:
                     fx.rates = oxr.rates;
