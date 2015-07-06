@@ -10,16 +10,19 @@
   "author": "",
   "license": "TheUnLicense",
   "dependencies": {
+    "1stand15th": "^1.0.0",
     "async": "^1.2.1",
     "date-arithmetic": "^3.0.0",
     "daylight": "^0.2.3",
+    "days-in-a-row": "^1.0.0",
     "moment": "^2.10.3",
     "money": "^0.2.0",
     "open-exchange-rates": "^0.3.0",
     "redis": "^0.12.1",
     "restify": "^3.0.3",
     "rollbar": "^0.5.4",
-    "xtconf": "^1.0.0"
+    "xtconf": "^1.0.0",
+    "year-month-day": "^1.0.0"
   },
   "devDependencies": {
     "node-dev": "^2.6.2",
